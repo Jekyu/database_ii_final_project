@@ -1,0 +1,40 @@
+\section{Requirements Documentation}
+\subsection{Functional Requirements}
+\begin{itemize}
+    \item FR1. Allow users to register with their details and relevant information (email address, personal details, and other details to be agreed upon).
+    \item FR2. Allow already registered users to log in, taking into account their log-in credentials (email and password).
+    \item FR3. Allow users to manage their storage space using folders, which must have specific options (view, organize, delete, move). Similarly, it must be possible to navigate between folders by hierarchical level according to the user's organization, listing the items available in each of the folder layers.
+    \item FR4. Users must be able to upload files to their workspace, organizing, and separating items as they wish into folders. Possible events during file upload must be guaranteed, indicating whether the files have been uploaded correctly or whether errors have occurred during upload. The valid file types for user upload (.docx, .pdf, .xls, .mp4, .mp3, .png, .jpg, .gif, .pptx) and the maximum upload size per file is 100MB.
+    \item FR5. Users should be able to view the current capacity of their storage space. Highlight how much space is currently occupied and how much space is still available.
+    \item FR6. Allow the user to view important data about the files they have in their storage space, including file name, size, root or file type, and upload date. In addition, users should also be allowed to download files available in their storage space.
+    However, Allow users to manage their files (delete, move, hide, and organize).
+    \item FR7. The system must maintain a traceability history of uploaded, deleted, and moved files. More importantly, it must sign each uploaded file as the property of an available and active account. In this way, priority must be given to ensuring that each account only has access to the files it owns; under no circumstances should unauthorized access to files from other accounts be permitted.
+    \item FR8. The system must implement secure password recovery (email with temporary token).
+    \item FR9. The system must validate all file accesses through session control and, optionally, generate temporary signed URLs for downloads.
+\end{itemize}
+\subsection{Non-Functional Requirements}
+Non-functional requirements establish the quality attributes and operational constraints of the file storage platform. They define essential aspects such as security, scalability, performance, and usability, ensuring that the system is not only functional but also reliable, efficient, and adaptable to future needs.
+
+\begin{itemize}
+    \item NFR1. Security. The system must guarantee the confidentiality, integrity, and availability of user information. All passwords must be stored using encryption algorithms, and sensitive operations like login, upload, and download must be performed over secure protocols (HTTPS). Unauthorized access to user files is strictly prohibited.
+    \item NFR2. Scalability.
+    The platform must be able to support a growing number of users, files, and transactions without performance degradation. Horizontal and vertical scaling strategies must be considered to ensure continuous expansion of service.
+    \item NFR3. Availability.
+    The system must ensure 24/7 availability with minimal downtime. Redundancy and failover mechanisms should be implemented to guarantee continuous operation.
+    \item NFR4. Performance.
+    The system must provide fast response times for core operations such as logging in, uploading / downloading files, and browsing. Queries and file retrieval should be optimized to handle concurrent requests efficiently.
+    \item NFR5. Usability.
+    The user interface must be intuitive, clear, and accessible for different user profiles. Navigation and file management should require minimal training.
+    \item NFR6. Maintainability.
+    The system must be easy to maintain, update, and extend. Clear modular design and proper documentation should allow developers to implement changes or fix issues quickly.
+    \item NFR7. Portability / compatibility.
+    The platform must run correctly across different browsers like Chrome, Firefox, Edge, Safari, and devices. Otherwise, mobile responsiveness must be guaranteed.
+    \item NFR8. Reliability / Fault Tolerance.
+    The system must tolerate failures without compromising user data. Mechanisms such as replication and distributed storage must ensure that files are never lost due to single-point failures.
+    \item NFR9. Backup and recovery.
+    The platform must include regular automatic backups and allow recovery procedures in case of data corruption, accidental deletion, or system failures.
+    \item NFR10. Auditability / Logging.
+    The system must log all relevant operations (login attempts, file uploads, deletions, downloads) to support traceability and security auditing.
+    \item NFR11. Interoperability.
+    The platform must expose APIs that allow integration with third-party applications, enabling users to connect their storage service with external tools, e.g., learning management systems or enterprise platforms.
+\end{itemize}
