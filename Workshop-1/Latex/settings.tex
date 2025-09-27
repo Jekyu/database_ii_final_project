@@ -14,32 +14,3 @@
 \usepackage{lscape}
 \usepackage{float}
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
-
-
-% Plantilla para user stories
-%
-\usepackage{tcolorbox}
-\newcommand{\userstory}[7]{
-    \begin{tcolorbox}[
-        enhanced,
-        colback=white,
-        colframe=green!50!black,
-        title=#1: #2,
-        fonttitle=\bfseries,
-        coltitle=green!50!black,
-        attach boxed title to top left={xshift=5mm,yshift=-2mm},
-        boxed title style={
-            colback=green!30!white,
-            colframe=green!50!black
-        }
-    ]
-    \textbf{Como:} #3 \\
-    \textbf{Quiero:} #4 \\
-    \textbf{Para:} #5 \\
-
-    \textbf{Criterios de Aceptación:}
-    #6
-
-    \textbf{Prioridad:} #7
-    \end{tcolorbox}
-}

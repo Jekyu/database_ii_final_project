@@ -1,24 +1,172 @@
-\section{User Stories}
-\userstory{US-001}{Registro de nuevo usuario}
-{Usuario no registrado}
-{Poder crear una cuenta en el sistema}
-{Acceder a las funcionalidades exclusivas}
-{\begin{itemize}[leftmargin=*]
-\item Validar formato de email
-\item Contraseña mínimo 8 caracteres
-\item Confirmación por email
-\item Mensajes de error claros
-\end{itemize}}
-{Alta}
+\subsection*{User Stories}
 
-\userstory{US-002}{Inicio de sesión}
-{Usuario registrado}
-{Acceder al sistema con mis credenciales}
-{Utilizar las funcionalidades de la plataforma}
-{\begin{itemize}[leftmargin=*]
-\item Validar credenciales
-\item Recordar sesión (opcional)
-\item Recuperar contraseña
-\item Bloqueo tras 3 intentos fallidos
-\end{itemize}}
-{Alta}
+AS is common in Agile methodologies the estimates are given in Story Points (SP) using a simplified Fibonacci-like scale (1, 2, 3, 5, 8).\\
+\\
+
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-01: User Registration & Must-Have & 8 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a new user, I want to register for an account by providing my email, password, and personal details, so that I can have my own private storage space on the platform.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am a new user on the registration page, when I enter a valid email, a secure password, and my required personal details and submit the form, then my account is created, and I receive an email confirmation.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-02: User Login & Must-Have & 3 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a registered user, I want to log in using my email and password, so that I can securely access my files and storage space.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am a registered user on the login page, when I enter my correct email and password and click "Login", then I am authenticated and redirected to my personal dashboard.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-03: Secure Password Recovery & Must-Have & 5 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user who forgot my password, I want to request a password reset via email with a temporary token, so that I can regain access to my account without compromising security.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am on the login page and click "Forgot Password", when I enter my email address and submit the request, then I receive an email with a secure, temporary link to create a new password.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-04: Upload a File & Must-Have & 8 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a logged-in user, I want to upload a file (e.g., .pdf, .jpg, .mp3) up to 100MB to a specific folder, so that I can store and organize my content in the cloud.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am in my workspace and have navigated to the desired folder, when I drag-and-drop or select a valid file for upload, then the system uploads the file and displays a success message; if there is an error, it clearly informs me.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-05: Create and Navigate Folders & Must-Have & 5 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to create new folders and navigate through my folder hierarchy, so that I can organize my files logically and find them easily.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am viewing the contents of my current folder, when I click "New Folder", provide a name, and confirm, then the new folder appears in my current view, and I can click on it to navigate inside.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-06: View File List and Details & Must-Have & 5 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to see a list of my files with their name, size, type, and upload date, so that I can get an overview of my stored content and its properties.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am logged in and viewing a folder, when the page loads, then I see a list of all items in that folder, displayed in a table or grid with the relevant columns.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-07: Download a File & Must-Have & 3 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to download a file from my storage space, so that I can access a local copy on my device.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am viewing the list of my files, when I click the "Download" button next to a file, then the file download begins immediately via a secure, temporary URL.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-08: Delete a File or Folder & Must-Have & 5 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to delete files or folders I no longer need, so that I can free up storage space and keep my workspace tidy.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I have selected one or more files/folders in my workspace, when I click the "Delete" button and confirm the action, then the items are moved to a "Trash" (or permanently deleted with a warning), and the storage space is updated.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-09: View Storage Capacity & Must-Have & 8 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to see a visual indicator of my used and available storage space, so that I can manage my uploads and avoid running out of space.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am logged into my dashboard, when the page loads, then I see a clear display (e.g., a bar chart or text) showing "X MB used of Y MB available".} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-10: Move Files/Folders & Should-Have & 8 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to move files and folders from one location to another within my storage, so that I can reorganize my content without having to re-upload it.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I have selected a file or folder, when I select the "Move" action and choose a destination folder from my hierarchy, then the item is moved to the new location and removed from the original one.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-11: Session Control and Security & Should-Have & 5 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a system security manager, I want all file accesses to be validated through session control, so that unauthorized users cannot access my files.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given a user is not logged in or their session has expired, when they try to access a direct file URL or an API endpoint, then the system denies the request and redirects them to the login page.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-12: File Activity History & Could-Have & 13 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a user, I want to view a history of my recent actions (uploads, deletions, moves), so that I can track changes and recover from mistakes.} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I am on my dashboard, when I navigate to an "Activity" or "History" section, then I see a chronological list of my file operations with timestamps.} \\
+    \hline
+\end{tabular}
+
+\vspace{5mm}
+\begin{tabular}{|p{4cm}|p{5cm}|p{5cm}|}
+    \hline
+    \textbf{Title} & \textbf{Priority} & \textbf{Estimate} \\
+    \hline
+    UH-13: API for Third-Party Integration & Could-Have & 13 SP \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{As a developer or power user, I want to use a well-documented API to interact with my files, so that I can integrate the storage service with other applications (e.g., an LMS).} \\
+    \hline
+    \multicolumn{3}{|p{14cm}|}{Given I have a valid API token, when I send a GET request to the `/api/files` endpoint, then I receive a JSON list of the files in my root directory.} \\
+    \hline
+\end{tabular}
