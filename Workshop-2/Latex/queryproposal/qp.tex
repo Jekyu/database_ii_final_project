@@ -1,0 +1,99 @@
+\section{Query Proposal}
+\subsection{User Account Information}
+    This query retrieves the user's stored credentials and account status to verify their identity and check if the account is active.
+
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT id, email, password, status
+        FROM account
+        WHERE email = 'user@example.com';
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: Authenticate a user during login.
+        \item Insight: Verifies user credentials and retrieves basic account status.
+    \end{itemize}
+
+\subsection{Personal Profile Data}
+    This query joins the account and info account tables to get a complete view of the user's profile.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT a.email, ia.first_name, ia.last_name, ia.phone, ia.birthdate
+        FROM account a
+        JOIN info_account ia ON a.id = ia.account_id
+        WHERE a.id = 'USER123';
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To display a user's profile information on their account settings page.
+    \end{itemize}
+
+\subsection{File Metadata}
+    This query retrieves non-trashed files from a specific folder, including their format details, sorted by upload date.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT f.id, f.name, f.upload_at, f.size, ff.extension
+        FROM file f
+        JOIN format_file ff ON f.format_file_name = ff.name
+        WHERE f.folder_id = 555 AND f.is_trashed = FALSE
+        ORDER BY f.upload_at DESC;
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To list all files within a specific folder for navigation..
+    \end{itemize}
+
+\subsection{Storage Usage Data}
+    This analytical query aggregates (SUM) the size of all files a user owns and compares it to their plan's capacity.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT sp.storage_capacity AS plan_limit,
+            COALESCE(SUM(f.size), 0) AS used_space
+        FROM storage_space ss
+        JOIN storage_plans sp ON ss.id = sp.id
+        JOIN file f ON f.storage_space_id = ss.id
+        WHERE ss.account_id = 'USER123'
+        GROUP BY sp.storage_capacity;
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To check a user's total used storage against their plan's limit.
+    \end{itemize}
+
+\subsection{Access Control and Permissions}
+    This query checks complex ownership and sharing rules. The relational model is strong for enforcing these multi-conditional access controls.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT f.id
+        FROM file f
+        LEFT JOIN folder fo ON f.folder_id = fo.id
+        WHERE f.id = 'FILE789'
+        AND (f.owner_id = 'USER123' OR fo.shared_with @> ARRAY['USER123']);
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To verify if a user has permission to download a specific file.
+    \end{itemize}
+
+\subsection{Subscription and Payment Records}
+    This query involve multiple joins across transactional tables (Payment, Subscription, Account) to generate a business report.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{sql}
+        SELECT a.email, s.id AS subscription_id, p.created_at, p.total_payment
+        FROM payment p
+        JOIN subscription s ON p.subscription_id = s.id
+        JOIN account a ON s.account_id = a.id
+        WHERE p.status = 'FAILED'
+        AND p.created_at > CURRENT_DATE - INTERVAL '7 days';
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To find all users with a failed payment for a follow-up process.
+    \end{itemize}
+
+\subsection{API Integration Data}
+    Similar to the SQL approach, but the flexible document model allows for easily adding new types of permission scopes or metadata to the token without schema changes.
+    \begin{minted}[fontsize=\small, linenos, bgcolor=lightgray]{python}
+        db.apiCredentials.findOne(
+            { api_key: "tok_xyz123", is_active: true },
+            { projection: { user_id: 1, permissions: 1 } }
+        )
+    \end{minted}
+
+    \begin{itemize}
+        \item Purpose: To validate an API token and retrieve its associated permissions.
+    \end{itemize}

@@ -1,0 +1,7 @@
+\begin{MintedVerbatim}[commandchars=\\\{\}]
+\PYG{+w}{        }\PYG{k}{SELECT}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{.}\PYG{n}{id}
+\PYG{+w}{        }\PYG{k}{FROM}\PYG{+w}{ }\PYG{n}{file}\PYG{+w}{ }\PYG{n}{f}
+\PYG{+w}{        }\PYG{k}{LEFT}\PYG{+w}{ }\PYG{k}{JOIN}\PYG{+w}{ }\PYG{n}{folder}\PYG{+w}{ }\PYG{n}{fo}\PYG{+w}{ }\PYG{k}{ON}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{.}\PYG{n}{folder\PYGZus{}id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{fo}\PYG{p}{.}\PYG{n}{id}
+\PYG{+w}{        }\PYG{k}{WHERE}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{.}\PYG{n}{id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}FILE789\PYGZsq{}}
+\PYG{+w}{        }\PYG{k}{AND}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{f}\PYG{p}{.}\PYG{n}{owner\PYGZus{}id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}USER123\PYGZsq{}}\PYG{+w}{ }\PYG{k}{OR}\PYG{+w}{ }\PYG{n}{fo}\PYG{p}{.}\PYG{n}{shared\PYGZus{}with}\PYG{+w}{ }\PYG{o}{@}\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n+nb}{ARRAY}\PYG{p}{[}\PYG{l+s+s1}{\PYGZsq{}USER123\PYGZsq{}}\PYG{p}{]}\PYG{p}{)}\PYG{p}{;}
+\end{MintedVerbatim}
