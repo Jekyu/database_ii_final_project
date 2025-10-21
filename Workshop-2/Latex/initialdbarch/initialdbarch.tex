@@ -3,17 +3,20 @@
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\linewidth,height=0.4\textheight,keepaspectratio]{initialdbarch/architecture_diagram.png}
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{initialdbarch/architecture_diagram.pdf}
     \caption{Architecture High Level Model for the File Storage Platform.}
     \label{fig:architecture_diagram}
 \end{figure}
-\subsection{Entity Relationship Diagram - First Version}
+
+\subsection{Entity Relationship Diagram - Second Version}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\linewidth,height=0.95\textheight,keepaspectratio]{initialdbarch/ER.cloud.jpg}
     \caption{ First version of the entity relationship diagram for the file storage platform.}
     \label{fig:Entity Relaction}
 \end{figure}
+\textbf{NOTE: Considering the feedback on the need for deeper analysis and improved data storage design, it was decided to remove the metadata information from the relational model. All metadata variations will instead be managed within an unstructured data model. Therefore, the ER diagram includes only a superficial reference to the files, while detailed metadata will be stored at scale in the non-relational database, “MongoDB.” Furthermore, the use of the \textit{account → info\_account} relationship is justified by defining a mandatory one-to-one association, where each account must have exactly one corresponding account information record. Consequently, creating an account information record requires the presence of an existing account ID, as its primary key is a composite key that includes the account ID.}
+
 \subsubsection{Description of entities}
 \begin{itemize}
     \item The \textbf{Account} entity represents the user account within the system. It contains main fields such as \textit{id}, \textit{email}, \textit{password}, \textit{status}, \textit{created\_at}, and \textit{last\_access}. Its role is to be the starting point for all user information, since both personal settings and storage space are derived from it.
@@ -45,32 +48,48 @@
 \end{itemize}
 \subsection{Data Flow and Storage Solutions}
 
-Here describes the overall data flow of the platform and the adopted storage solutions. It explains how information moves through the system and how files and metadata are managed across different storage layers.
+The data architecture of the proposed file storage system focuses on how information is generated, transferred, and stored throughout the platform. The goal is to ensure secure handling of user data and efficient management of file storage while maintaining scalability and reliability. Figure~\ref{fig:Dataflow} illustrates the overall information flow.
+
+\subsubsection{Data Flow}
+
+When a user performs an operation such as registration, login, or file upload, the system validates the request and processes the corresponding data transaction. 
+During authentication, user credentials are verified against the database, and secure session identifiers are generated.  
+In file upload operations, the file’s binary content and descriptive metadata are separated:  
+\begin{itemize}
+    \item The \textbf{binary content} is stored directly in a cloud-based object storage service.
+    \item The \textbf{metadata} name, size, type, upload date, and owner is recorded in the relational database.
+\end{itemize}
+
+For retrieval or download requests, metadata is used to locate the file in storage, and a temporary access token or signed URL ensures that only authorized users can retrieve it.  
+All user interactions—such as upload, deletion, or access—are recorded in activity logs that support traceability and auditing.  
+
+This structure ensures a clear distinction between operational data, transactions and sessions and persistent data, files and metadata, simplifying future scalability and maintenance.
+
+\subsubsection{Storage Solutions}
+
+The system uses a hybrid data storage model that separates structured and unstructured data for efficiency and flexibility.
+
+\begin{itemize}
+    \item \textbf{Relational Database PostgreSQL.}  
+    Stores user information, permissions, and file metadata. The relational model ensures consistency, supports indexing, and facilitates query optimization.
+
+    \item \textbf{Object Storage S3-compatible.}  
+    Handles unstructured binary data, storing files using unique identifiers linked to metadata entries. This provides scalable and cost-effective storage for large files.
+
+    \item \textbf{Cache Redis, optional.}  
+    Temporarily stores frequently accessed metadata to improve query response times and reduce database load.
+
+    \item \textbf{Logging and Backup.}  
+    The system maintains logs for user actions and performs periodic backups of metadata and configuration data to support recoverability and auditing.
+\end{itemize}
+
+This architecture allows for secure, modular, and efficient data handling while remaining lightweight and scalable for a prototype implementation.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth,keepaspectratio]{initialdbarch/Dataflow.png}
-    \caption{Data Flow and Storage Solutions for the file storage platform.}
-    \label{fig:dataflow}
+    \includegraphics[width=0.9\linewidth,keepaspectratio]{initialdbarch/DataFlow.png}
+    \caption{Data Flow and Storage Logic of the file storage platform.}
+    \label{fig:Dataflow}
 \end{figure}
 
-For the dataflow, it proposed system manages two primary data types: user information and files. The data flow begins when a user interacts with the platform through the web or mobile interface. Requests are sent to the backend application server, which validates user credentials and permissions through the authentication service. Once authenticated, the backend processes the request according to its type:\\
-
-\begin{itemize}
-    \item For file uploads, the binary object is stored in the cloud object storage, while metadata, e.g., file name, size, type, upload date, and owner is recorded in the relational database.
-    \item For file downloads, the backend verifies user access rights and generates a temporary signed URL, allowing secure file retrieval from the object storage.
-    \item For queries such as listing files or browsing folders, the backend retrieves metadata from the database and may leverage a cache layer to accelerate frequent lookups.
-\end{itemize}
-
-This flow ensures that every operation is validated, traceable, and optimized for performance while maintaining strict access control. \\
-
-Regarding storage solutions, its design adopts a hybrid model:
-
-\begin{itemize}
-    \item Relational Database: like PostgreSQL or MySQL is used for structured information such as user accounts, roles, permissions, and file metadata. This allows enforcing relationships and maintaining consistency.
-    \item Object Storage: e.g., AWS S3, Azure Blob is used for binary files, ensuring scalability, durability, and redundancy. This approach allows efficient handling of large files with virtually unlimited capacity.
-    \item Cache Layer: for supports faster access to frequently requested metadata, reducing database load.
-    \item Backup and Replication strategies: ensure high availability and disaster recovery, minimizing the risk of data loss.
-\end{itemize}
-
-This architecture separates file storage from metadata management, providing scalability and flexibility. It also ensures that the platform can handle a growing number of users and files without compromising security, reliability, or performance.
+The proposed data flow and storage logic establish a clear separation between user interaction data, operational transactions, and persistent storage. By isolating metadata management from binary file handling, the system ensures scalability, integrity, and efficient retrieval of information. The hybrid storage model—combining relational databases and object storage—provides flexibility for future growth while maintaining a lightweight implementation suitable for a prototype environment.

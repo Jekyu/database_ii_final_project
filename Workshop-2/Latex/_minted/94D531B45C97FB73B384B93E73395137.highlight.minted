@@ -1,6 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-\PYG{+w}{        }\PYG{k}{SELECT}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{.}\PYG{n}{email}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ia}\PYG{p}{.}\PYG{n}{first\PYGZus{}name}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ia}\PYG{p}{.}\PYG{n}{last\PYGZus{}name}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ia}\PYG{p}{.}\PYG{n}{phone}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{ia}\PYG{p}{.}\PYG{n}{birthdate}
-\PYG{+w}{        }\PYG{k}{FROM}\PYG{+w}{ }\PYG{n}{account}\PYG{+w}{ }\PYG{n}{a}
-\PYG{+w}{        }\PYG{k}{JOIN}\PYG{+w}{ }\PYG{n}{info\PYGZus{}account}\PYG{+w}{ }\PYG{n}{ia}\PYG{+w}{ }\PYG{k}{ON}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{.}\PYG{n}{id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ia}\PYG{p}{.}\PYG{n}{account\PYGZus{}id}
-\PYG{+w}{        }\PYG{k}{WHERE}\PYG{+w}{ }\PYG{n}{a}\PYG{p}{.}\PYG{n}{id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}USER123\PYGZsq{}}\PYG{p}{;}
-\end{MintedVerbatim}

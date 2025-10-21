@@ -1,9 +1,0 @@
-\begin{MintedVerbatim}[commandchars=\\\{\}]
-\PYG{+w}{        }\PYG{k}{SELECT}\PYG{+w}{ }\PYG{n}{sp}\PYG{p}{.}\PYG{n}{storage\PYGZus{}capacity}\PYG{+w}{ }\PYG{k}{AS}\PYG{+w}{ }\PYG{n}{plan\PYGZus{}limit}\PYG{p}{,}
-\PYG{+w}{            }\PYG{k}{COALESCE}\PYG{p}{(}\PYG{k}{SUM}\PYG{p}{(}\PYG{n}{f}\PYG{p}{.}\PYG{k}{size}\PYG{p}{)}\PYG{p}{,}\PYG{+w}{ }\PYG{l+m+mi}{0}\PYG{p}{)}\PYG{+w}{ }\PYG{k}{AS}\PYG{+w}{ }\PYG{n}{used\PYGZus{}space}
-\PYG{+w}{        }\PYG{k}{FROM}\PYG{+w}{ }\PYG{n}{storage\PYGZus{}space}\PYG{+w}{ }\PYG{n}{ss}
-\PYG{+w}{        }\PYG{k}{JOIN}\PYG{+w}{ }\PYG{n}{storage\PYGZus{}plans}\PYG{+w}{ }\PYG{n}{sp}\PYG{+w}{ }\PYG{k}{ON}\PYG{+w}{ }\PYG{n}{ss}\PYG{p}{.}\PYG{n}{id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{sp}\PYG{p}{.}\PYG{n}{id}
-\PYG{+w}{        }\PYG{k}{JOIN}\PYG{+w}{ }\PYG{n}{file}\PYG{+w}{ }\PYG{n}{f}\PYG{+w}{ }\PYG{k}{ON}\PYG{+w}{ }\PYG{n}{f}\PYG{p}{.}\PYG{n}{storage\PYGZus{}space\PYGZus{}id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{ss}\PYG{p}{.}\PYG{n}{id}
-\PYG{+w}{        }\PYG{k}{WHERE}\PYG{+w}{ }\PYG{n}{ss}\PYG{p}{.}\PYG{n}{account\PYGZus{}id}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+s+s1}{\PYGZsq{}USER123\PYGZsq{}}
-\PYG{+w}{        }\PYG{k}{GROUP}\PYG{+w}{ }\PYG{k}{BY}\PYG{+w}{ }\PYG{n}{sp}\PYG{p}{.}\PYG{n}{storage\PYGZus{}capacity}\PYG{p}{;}
-\end{MintedVerbatim}
