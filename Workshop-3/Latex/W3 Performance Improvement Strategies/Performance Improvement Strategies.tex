@@ -1,0 +1,32 @@
+\section{Performance Improvement Strategies}
+To enhance the scalability, responsiveness, and robustness of the cloud storage platform, we propose three distributed and parallel performance improvement strategies aligned with the system architecture defined in previous workshops. These strategies focus on improving throughput, reducing latency, and ensuring that the system can sustain increasing user and file workloads. To ensure that the cloud storage platform operates efficiently in an academic context, we propose three performance improvement strategies based on lightweight forms of parallelism and logical distribution. These strategies are feasible for the team and compatible with free-tier or local deployments. \\
+
+Additionally, each section includes notes on how more advanced techniques could be explored conceptually to extend performance beyond the project’s practical constraints.
+
+\subsection{Asynchronous and Parallel Request Handling in the Backend}
+
+The backend naturally supports asynchronous processing, allowing multiple user requests to be handled in parallel without blocking the event loop. This model significantly improves performance when users simultaneously upload or download files, as operations such as reading, writing, or generating file metadata occur concurrently. This strategy is realistic and cost-effective because it does not require multiple servers or advanced load balancers. Instead, performance improvement relies on non-blocking I/O and efficient endpoint design.\\
+
+Trade-offs: Asynchronous programming increases code complexity and makes debugging more challenging. Advanced horizontal scaling using container orchestration or load balancers could further improve performance, but these techniques involve additional financial and infrastructural costs. Still, they could be considered conceptually to imagine how the system would behave under real-world high-demand scenarios.\\
+
+Challenges: Ensuring proper management of concurrent file operations to avoid race conditions, especially during metadata updates.
+
+\subsection{Lightweight Data Partitioning Through Logical Separation}
+
+Instead of implementing full database sharding which exceeds the scope of an academic project, the system applies logical data separation: PostgreSQL stores structured data like users, roles, file records while MongoDB stores unstructured logs and metadata. AWS S3 or MinIO handles the binary files. This separation distributes workload across different storage engines, reducing pressure on any single component while keeping the architecture simple and implementable.\\
+
+Trade-offs: This approach does not provide the full scalability of distributed sharding, and performance gains are limited by running all services on a small number of machines. In a conceptual extension, sharded PostgreSQL clusters or MongoDB replica sets could be explored to evaluate their impact on large-scale performance, acknowledging the infrastructure and cost implications.\\
+
+Challenges: Maintaining data consistency across databases requires careful coordination at the API layer. Ensuring consistency across multiple data stores requires the same.
+
+\subsection{Local Caching and Preprocessing for File Operations}
+
+To improve perceived performance, the system can implement a lightweight caching mechanism for frequently accessed metadata and recently uploaded files. A small in-memory cache, such as a local Redis instance thats free and easy to run, can reduce the number of repeated database queries and minimize latency during navigation or file listing operations. This strategy improves response time without requiring expensive infrastructure or replication mechanisms. \\
+
+Trade-offs: Cached information can become outdated unless proper invalidation mechanisms are implemented. Expanding this caching strategy to a distributed, multi-node cluster would provide greater scalability, but such architectures may exceed the budget and infrastructure available for this project. They can, however, be envisioned as part of a hypothetical large-scale evolution of the platform.\\
+
+Challenges: Designing simple cache rules to avoid stale data, such as invalidating entries on upload, delete, or file metadata updates.\\
+
+These strategies combine asynchronous backend execution, logical data separation, and lightweight caching to improve the system’s performance without relying on high-cost distributed infrastructure. Together, they allow the platform to support multiple users, frequent file operations, and real-time interactions while remaining feasible for implementation in a controlled academic environment. These techniques maintain a balance between practicality and academic rigor, making them realistic for implementation while still offering room for conceptual exploration of more advanced distributed performance techniques. Despite certain financial or infrastructural limitations, considering these extended strategies helps illustrate how the system could scale beyond the scope of the course.\\
+
+Although they offer more modest gains than full-scale cloud techniques, they directly match the scope, resources, and learning objectives.

@@ -1,0 +1,37 @@
+\section{Concurrenct Analysis}
+\newpage
+\section{Parallel and Distributed Desing}
+\subsection{High Level Diagram Parallel DB} 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{concurrenciaParalelismo/architecture_parallel.pdf}
+    \caption{High Level Diagram Parallel DB.}
+    \label{fig:architecture_diagram}
+\end{figure}
+The previous diagram represents the high-level abstraction architecture that shows the structure of the system and its operating flow. It focuses on demonstrating parallel architecture strategies of the shared disk type with multiple worker processes in high-concurrency parallel instances. 
+\subsubsection{Application Layer and Parallelism}
+The application layer is headed by a REST API that acts as a communication interface with external clients. This API connects to authentication and business logic modules that process incoming requests. The central component of the parallel architecture is the server that runs multiple worker processes simultaneously, each with its own independent local memory space. This configuration allows three different processes to handle user requests concurrently, taking advantage of the multiple processor cores available. Each process can read, write, and process information without interfering with the others, thus achieving parallelism at the application level.
+\subsubsection{Operations Routing}
+Between the application layer and the databases, there is a component called “Operation write/read” that functions as an intelligent query distributor. This module determines whether an operation requires writing or only reading, and directs the request to the corresponding database instance. Write operations are sent exclusively to the PostgreSQL Primary, while read operations are distributed among the two or more PostgreSQL replicas that are kept synchronized with the primary through data replication processes.
+\subsubsection{Percistence Layer}
+The persistence layer includes three PostgreSQL instances organized in a primary-replica configuration. The PostgreSQL Primary handles all data modification operations, while the two read-only replicas serve query requests, thus distributing the read workload that is typically much more frequent in storage systems. Additionally, the system incorporates MongoDB as a complementary database to specifically manage file metadata through read, update, and insert operations. Finally, Amazon S3 is integrated as a binary object storage service, which the application accesses by generating signed URLs that allow clients to download files directly without going through the application servers. The diagram indicates that both S3 and PostgreSQL internally incorporate their own parallelism strategies for handling high concurrency.
+\subsection{Flow Data - Parallel Architecture}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{concurrenciaParalelismo/flow-data-parallel.pdf}
+    \caption{Flow Data Paraller Diagram}
+    \label{fig:architecture_diagram}
+\end{figure}
+The diagram above specifies and shows the system's data flow in a more specific and granular way. It specifies the situation of multiple query requests for which a filter is shown to determine whether they are read, write, or update requests in order to determine the appropriate data instance for the request. This ensures that there are high-concurrency parallel processes that can be handled by multiple read-only copies of the database instances.
+\subsection{Architectural Justifications}
+\begin{itemize}
+\item{\textbf{Fast access and high traffic:}}
+\newline
+One of the main reasons for selecting parallel architecture for data access is that the system must be capable of supporting high user concurrency and ensuring high response speeds. In cloud storage systems like Dropbox, users expect immediate responses when navigating their folder structures, searching for files, or accessing document metadata. Any perceptible delay in these operations significantly degrades the user experience and can lead to abandonment of the platform. The parallel architecture addresses this challenge by distributing the computational workload across multiple processing units that operate simultaneously. When hundreds or thousands of users make requests at the same time, the system can handle these petitions concurrently rather than queuing them sequentially, which would create bottlenecks and exponentially increase response times. Additionally, this architecture leverages multiple CPU cores available in modern servers, ensuring that the processing capacity scales naturally with the hardware capabilities without requiring complex distributed coordination mechanisms that would add latency.
+\item{\textbf{Adaptation according to use:}}
+\newline
+It is important to highlight the analysis carried out to determine parallelism strategies both on the server and in data access. The first observation is that in cloud applications similar to the current development, there is a difference between write and update queries versus read-only queries. Therefore, read operations predominate over the other two, because users mainly access their space, folders, and items, generating operations and queries related to viewing, structuring, and sorting their files. For this reason, a solution is presented with a strong emphasis on covering the high concurrency of user reads. This approach has characteristics of parallelism with shared disk architecture, however, it takes advantage of read replica instances and the single main data instance for write and update operations. It also takes advantage of the multitasking processes of the PostgreSQL engine itself, which integrates workers in complex and high-demand queries for parallel processes.
+\item{\textbf{Scaling and requirements:}}
+\newline
+Regarding the scaling and growth of the system with respect to the requirements outlined in a previous section, the most important points include high concurrency, good availability, consistency, atomicity, security, and adequate performance. From there, we start with a solution at an initial and iterative maturity level, proposing parallel architecture strategies that allow us to meet the main acceptance criteria. We begin with a single server with multiprocessing configurations and high capacity for solving and managing requests, initially using a VPS with good processing, storage, and speed capabilities. However, in terms of data management and administration, an alternative is presented involving multiple read-only Postgres instances that will be synchronized with a main instance that handles the other operations. This leaves open the possibility of later implementing strategies more focused on maximizing the independence of resources such as memory and disk. Finally, a regionally distributed alternative can be applied when the system needs to expand its regional operation or because the parallel alternative has already been exceeded or presents unsustainable costs.
+\end{itemize}

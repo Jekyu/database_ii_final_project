@@ -1,0 +1,74 @@
+\section{Parallel and Distributed Databases}
+
+The initial architecture provides a solid foundation for a prototype. However, to prepare the system for production-grade scalability, high availability, and global performance, we propose an evolution towards a fully distributed and parallel database design. This is justified by the project's non-functional requirements for Scalability, Availability, and Performance, anticipating growth in user base, data volume, and geographic dispersion.
+
+
+\subsection{High-Level Design}
+The core of this evolution involves distributing the primary relational database (PostgreSQL) and the document database (MongoDB) across multiple nodes.
+
+\subsubsection{PostgreSQL Sharding with Citus}
+
+\begin{itemize}
+    \item Concept: We will use Citus (a PostgreSQL extension) to transform the standalone PostgreSQL instance into a distributed database. Citus shards tables across multiple nodes, turning a single database into a shared-nothing cluster.
+
+    \item Sharding Key: The account\_id will be the primary sharding key for most tables. This ensures that all data for a single user is located on the same node, making user-specific queries extremely fast.
+
+    \item Benefits: Enables horizontal scaling for the relational data, allowing it to handle a massive increase in the number of users and files. Parallelizes queries across nodes for complex analytical queries.
+\end{itemize}
+
+\subsubsection{MongoDB Sharded Cluster}
+
+\begin{itemize}
+\item Concept: We will configure MongoDB as a sharded cluster, which is its native distributed architecture. This consists of Shards (data nodes), Config Servers (metadata managers), and Query Routers (mongos instances).
+
+\item Sharding Key: A hashed shard key on \_id or a compound key like {account\_id, \_id} is recommended. This distributes writes evenly across the cluster while keeping related documents reasonably grouped.
+
+\item Benefits: Provides horizontal scalability for the metadata store, which is critical as the variety and volume of file metadata grow. Ensures that metadata queries can be parallelized and are not limited by the capacity of a single machine.
+\end{itemize}
+
+\subsection{Data and Query Flow Diagrams}
+The following diagrams illustrate how data is distributed and how queries are parallelized in the new architecture.
+
+\subsubsection{Overall Distributed Data Flow}
+
+This diagram shows how the different distributed components interact when a user uploads a file.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{parallel/overall.png}
+    \caption{Overall Distributed Data Flow}
+    \label{fig:orveall}
+\end{figure}
+
+\subsubsection{Distributed Query for User's File List}
+
+This diagram illustrates how a simple query to list a user's files is parallelized and executed efficiently.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{parallel/distribuited.png}
+    \caption{Distributed Query for User's File List}
+    \label{fig:distribuited}
+\end{figure}
+
+\subsubsection{MongoDB Sharded Cluster for Metadata}
+
+This diagram depicts the architecture of the distributed MongoDB cluster.
+
+\begin{figure}[!h]
+    \centering
+    \includegraphics[width=\linewidth, height=0.4\textheight, keepaspectratio]{parallel/mongo.png}
+    \caption{MongoDB Sharded Cluster for Metadata}
+    \label{fig:mongo}
+\end{figure}
+
+\subsection{Justification Based on Project Requirements}
+The choice to move towards a distributed architecture is driven by a forward-looking analysis of the project's requirements:
+
+\begin{itemize}
+\item \textbf{Scalability (NFR2):} The initial architecture relies on vertical scaling (upgrading a single server), which has a hard limit. Sharding in both PostgreSQL and MongoDB provides horizontal scaling, allowing us to add more nodes to the cluster to handle increases in data volume and user concurrency seamlessly. This is essential for a storage platform aiming for mass adoption.
+
+\item \textbf{Performance for "Big Data" Scenarios (NFR4):} As the system grows, analytical queries like "total platform storage used" or "most popular file types" would become slow on a single database. A distributed architecture parallelizes these queries. For example, Citus can send a COUNT(*) query to all shards, each shard counts its local rows, and the results are aggregated, returning a result in a fraction of the time.
+
+\item \textbf{Foundation for Future Features:} A distributed database is the bedrock for advanced features. It can easily support time-series data for detailed activity logs (UH-12), power complex search indexes across petabytes of metadata, and maintain performance under heavy load during marketing campaigns or partnership integrations.
+\end{itemize}
