@@ -1,0 +1,4 @@
+        db.apiCredentials.findOne(
+            { api_key: "tok_xyz123", is_active: true },
+            { projection: { user_id: 1, permissions: 1 } }
+        )

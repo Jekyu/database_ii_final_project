@@ -1,0 +1,57 @@
+\section{Information Requirements}
+
+This section identifies and describes the main types of information for the file storage platform that must retrieve and manage to support its business processes and user interactions.
+
+\subsection{Main Information Types}
+
+\begin{itemize}
+    \item \textbf{User Account Information.} 
+    Includes essential user details such as email, password, registration date, and status. This information supports authentication and user management processes. 
+    It relates to user stories \textit{UH-01 User Registration}, \textit{UH-02 User Login}, and \textit{UH-03 Secure Password Recovery}.
+
+    \item \textbf{Personal Profile Data.} 
+    Contains user-identifying information. Name, last name, birthdate, contact data. 
+    This data improves personalization and communication features, aligning with the \textit{Customer Relationship} block in the Business Model.
+
+    \item \textbf{File Metadata.} 
+    Describes the properties of each stored file: name, size, format, upload date, and folder location. 
+    It enables browsing, searching, and organizing functionalities. 
+    Directly related to user stories \textit{UH-04 Upload a File}, \textit{UH-05 Create and Navigate Folders}, and \textit{UH-06 View File List and Details}.
+
+    \item \textbf{Storage Usage Data.} 
+    Includes information about total and available space per user and plan type. 
+    This supports the system’s scalability control and provides feedback to users about their consumption levels, as seen in \textit{UH-09 View Storage Capacity}.
+
+    \item \textbf{Access Control and Permissions.} 
+    Defines which user has access to each file or folder for view, edit or share. 
+    Ensures security and privacy according to user roles and authentication tokens. 
+    This type of data supports \textit{UH-07 Download a File}, \textit{UH-08 Delete a File or Folder}, and \textit{UH-11 Session Control and Security}.
+
+    \item \textbf{Subscription and Payment Records.} 
+    Stores plan details, payment methods, and subscription validity periods. 
+    It enables the implementation of the freemium model defined in the \textit{Revenue Streams} block and supports future billing automation. 
+    It relates to user story \textit{UH-09 View Storage Capacity} and the business requirement of premium upgrades.
+
+    \item \textbf{Activity Logs.} 
+    Logs all relevant system events, including uploads, downloads, deletions, and failed access attempts. 
+    This information supports auditing, reliability, and fault diagnosis, as defined in non-functional requirements \textit{NFR10 Logging and Auditability} and user story \textit{UH-12 File Activity History}.
+
+    \item \textbf{API Integration Data.} 
+    Contains the tokens, permissions, and endpoints associated with third-party system access. 
+    It supports the integration described in the \textit{Interoperability} requirement and relates to user story \textit{UH-13 API for Third-Party Integration}.
+\end{itemize}
+
+Each type of information is strategically connected to the business model and user experience:
+
+\begin{itemize}
+    \item \textbf{Customer Segments and Relationships:} 
+    User and profile information support personalized and secure access for different user categories, for an initial case: students, professionals, and small businesses.
+    \item \textbf{Value Proposition:} 
+    File metadata, ACLs, and activity logs guarantee reliable and organized file management, reinforcing the core service value.
+    \item \textbf{Revenue Streams:} 
+    Subscription and payment data ensure the sustainability of the freemium and premium plans.
+    \item \textbf{Key Activities:} 
+    Monitoring user behavior and storage usage enables continuous system optimization and scalability planning.
+\end{itemize}
+
+Whith these information requirements that define the data backbone of the system, guiding the subsequent database query design and ensuring consistency between storage, performance, and business objectives.
