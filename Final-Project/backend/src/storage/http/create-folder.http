@@ -1,0 +1,8 @@
+POST http://localhost:3000/api/storage/folder/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmZmY3NmRiLWQzNmMtNDhhMC04ZGJiLTFhYWQyZGI0Y2E4OSIsImlhdCI6MTc2NTM5MDE5NCwiZXhwIjoxNzY1MzkzNzk0fQ.EZDAvZr6jFXSbkIhQDBgxWrNwrQL6UsX60MzfG_FjNQ
+
+{
+    "name": "test",
+    "parent_id": "1840612b-db4b-4f0f-aa78-c7d11239b235"  // Si no se pasa el parent_id, se crea en la raíz del usuario
+}

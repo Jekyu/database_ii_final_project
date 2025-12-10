@@ -1,0 +1,4 @@
+GET http://localhost:3000/api/storage/dfff76db-d36c-48a0-8dbb-1aad2db4ca89/ -- id del usuario
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmZmY3NmRiLWQzNmMtNDhhMC04ZGJiLTFhYWQyZGI0Y2E4OSIsImlhdCI6MTc2NTM5MDE5NCwiZXhwIjoxNzY1MzkzNzk0fQ.EZDAvZr6jFXSbkIhQDBgxWrNwrQL6UsX60MzfG_FjNQ
+

@@ -1,0 +1,1 @@
+{"version":3,"file":"mpeg.strategy.js","sourceRoot":"","sources":["../../../../src/storage/providers/strategies/mpeg.strategy.ts"],"names":[],"mappings":";;;AACA,qCAAqC;AAErC,MAAa,YAAY;IACrB,KAAK,CAAC,WAAW,CAAC,IAAyB;QACvC,MAAM,YAAY,GAAG,IAAI,CAAC,MAAM,CAAA;QAChC,MAAM,QAAQ,GAAG,MAAM,EAAE,CAAC,WAAW,CAAC,YAAY,CAAC,CAAA;QACnD,OAAO,QAAQ,CAAA;IACnB,CAAC;CAEJ;AAPD,oCAOC"}

@@ -1,0 +1,5 @@
+GET http://localhost:3000/api/storage/folder/0e239ab4-d6b8-4d46-a6ac-b7cde5242da7
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmZmY3NmRiLWQzNmMtNDhhMC04ZGJiLTFhYWQyZGI0Y2E4OSIsImlhdCI6MTc2NTM5NDI1NywiZXhwIjoxNzY1Mzk3ODU3fQ.NyaIkRryEYXfo4bRBE2mX0eIaWoMzlvk3nXdlhdiSRc
+
+// el parametro de la ruta despues de folder/{{folder_id}} es el id de la carpeta que se quiere obtener el contenido

@@ -1,0 +1,1 @@
+{"version":3,"file":"jpge.strategy.js","sourceRoot":"","sources":["../../../../src/storage/providers/strategies/jpge.strategy.ts"],"names":[],"mappings":";;;AAEA,0CAAyC;AAEzC,MAAa,aAAa;IACtB,KAAK,CAAC,WAAW,CAAC,IAAyB;QACxC,MAAM,MAAM,GAAG,UAAU,CAAC,MAAM,CAAC,IAAI,CAAC,MAAM,CAAC,CAAA;QAC7C,MAAM,QAAQ,GAAG,MAAM,CAAC,KAAK,EAAE,CAAA;QAC/B,OAAO,QAAQ,CAAA;IAClB,CAAC;CAEJ;AAPD,sCAOC"}

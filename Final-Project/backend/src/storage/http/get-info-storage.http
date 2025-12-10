@@ -1,0 +1,2 @@
+GET http://localhost:3000/api/storage
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImRmZmY3NmRiLWQzNmMtNDhhMC04ZGJiLTFhYWQyZGI0Y2E4OSIsImlhdCI6MTc2NTM5NDI1NywiZXhwIjoxNzY1Mzk3ODU3fQ.NyaIkRryEYXfo4bRBE2mX0eIaWoMzlvk3nXdlhdiSRc
