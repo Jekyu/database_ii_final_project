@@ -102,7 +102,7 @@ export class StorageService {
         try {
             await this.storageRepository.save(storage)
         } catch (error) {
-            throw new RequestTimeoutException('Error al crear espacio')
+            throw new RequestTimeoutException(`${error} Error al crear espacio`)
         }
     }
 

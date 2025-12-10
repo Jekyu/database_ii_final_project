@@ -52,7 +52,7 @@ let AccountService = class AccountService {
             };
         }
         catch (error) {
-            throw new common_1.RequestTimeoutException(`Error al crear la cuenta`);
+            throw new common_1.RequestTimeoutException(`${error}Error al crear la cuenta`);
         }
     }
     async getAccount(email, id) {

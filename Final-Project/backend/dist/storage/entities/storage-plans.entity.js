@@ -47,7 +47,7 @@ __decorate([
     __metadata("design:type", Number)
 ], StoragePlan.prototype, "monthly_price", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => storage_space_entity_1.StorageSpace, (storage_space) => storage_space.storage_plan),
+    (0, typeorm_1.OneToMany)(() => storage_space_entity_1.StorageSpace, (storage_space) => storage_space.storage_plan),
     __metadata("design:type", storage_space_entity_1.StorageSpace)
 ], StoragePlan.prototype, "storage_space", void 0);
 exports.StoragePlan = StoragePlan = __decorate([

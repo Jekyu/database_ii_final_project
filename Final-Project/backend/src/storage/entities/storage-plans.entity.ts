@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { StorageSpace } from "./storage-space.entity";
 
 @Entity()
@@ -25,6 +25,6 @@ export class StoragePlan{
     })
     monthly_price: number
 
-    @OneToOne(() => StorageSpace, (storage_space) => storage_space.storage_plan)
+    @OneToMany(() => StorageSpace, (storage_space) => storage_space.storage_plan)
     storage_space: StorageSpace
 }

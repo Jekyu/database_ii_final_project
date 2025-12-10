@@ -54,7 +54,7 @@ __decorate([
     __metadata("design:type", Date)
 ], StorageSpace.prototype, "create_at", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => storage_plans_entity_1.StoragePlan, (storage_plan) => storage_plan.storage_space),
+    (0, typeorm_1.ManyToOne)(() => storage_plans_entity_1.StoragePlan, (storage_plan) => storage_plan.storage_space),
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", storage_plans_entity_1.StoragePlan)
 ], StorageSpace.prototype, "storage_plan", void 0);

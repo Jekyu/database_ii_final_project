@@ -1,5 +1,5 @@
 import { Account } from "src/account/entities/account.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 import { StatusStorageEnum } from "../enum/status-storage.enum";
 import { Folder } from "src/file-folder/entities/folder.entity";
 import { StoragePlan } from "./storage-plans.entity";
@@ -29,7 +29,7 @@ export class StorageSpace{
     @CreateDateColumn()
     create_at: Date
 
-    @OneToOne(() => StoragePlan, (storage_plan) => storage_plan.storage_space)
+    @ManyToOne(() => StoragePlan, (storage_plan) => storage_plan.storage_space)
     @JoinColumn()
     storage_plan: StoragePlan
 

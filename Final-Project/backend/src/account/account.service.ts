@@ -42,7 +42,7 @@ export class AccountService {
                 message: 'Cuenta creada exitosamente'
             }
         } catch (error) {
-            throw new RequestTimeoutException(`Error al crear la cuenta`)
+            throw new RequestTimeoutException(`${error}Error al crear la cuenta`)
         }
     }
 

@@ -109,7 +109,7 @@ let StorageService = class StorageService {
             await this.storageRepository.save(storage);
         }
         catch (error) {
-            throw new common_1.RequestTimeoutException('Error al crear espacio');
+            throw new common_1.RequestTimeoutException(`${error} Error al crear espacio`);
         }
     }
     async createFolder(createfolderDto, idAccount) {
