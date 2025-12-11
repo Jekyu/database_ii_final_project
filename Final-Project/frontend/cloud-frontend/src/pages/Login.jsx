@@ -31,8 +31,8 @@ export function Login({ onLogin, onSwitchView }) {
     try {
       setLoading(true);
       await onLogin(email.trim(), password);
-    } catch {
-      setFormError("Invalid credentials or server error.");
+    } catch (err) {
+      setFormError(err?.message || "Invalid credentials or server error.");
     } finally {
       setLoading(false);
     }

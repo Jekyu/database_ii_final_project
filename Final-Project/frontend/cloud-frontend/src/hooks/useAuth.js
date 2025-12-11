@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../api/service";
+import { api, setAuthToken } from "../api/service";
 
 const STORAGE_KEY = "cloud_ud_auth";
 
@@ -12,7 +12,8 @@ export function useAuth() {
       try {
         const parsed = JSON.parse(saved);
         if (parsed?.token) {
-          setAuth(parsed);
+          setAuthToken(parsed.token);
+          setAuth({ token: parsed.token, user: parsed.user ?? null });
         } else {
           localStorage.removeItem(STORAGE_KEY);
         }
@@ -23,22 +24,36 @@ export function useAuth() {
   }, []);
 
   const login = async (email, password) => {
-    const data = await api.login(email, password);
-    const nextAuth = { token: data.token, user: data.user };
-    setAuth(nextAuth);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextAuth));
+    try {
+      const data = await api.login(email, password);
+      if (!data?.token) throw new Error("Login failed: token missing.");
+      const nextAuth = { token: data.token, user: data.user ?? { email } };
+      setAuthToken(data.token);
+      setAuth(nextAuth);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(nextAuth));
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const register = async ({ name, email, password }) => {
-    const data = await api.register({ name, email, password });
-    const nextAuth = { token: data.token, user: data.user };
-    setAuth(nextAuth);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextAuth));
+  const register = async ({ first_name, last_name, phone, email, password }) => {
+    const payload = {
+      email: email.trim(),
+      password,
+      info_account: {
+        first_name: first_name.trim(),
+        last_name: last_name.trim(),
+        phone: phone.trim(),
+      },
+    };
+
+    return api.register(payload);
   };
 
   const logout = () => {
     localStorage.removeItem(STORAGE_KEY);
     setAuth({ token: null, user: null });
+    setAuthToken(null);
   };
 
   return { auth, login, register, logout };

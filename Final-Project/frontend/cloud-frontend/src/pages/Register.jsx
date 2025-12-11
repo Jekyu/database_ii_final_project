@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
 export function Register({ onRegister, onSwitchView }) {
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -9,14 +11,31 @@ export function Register({ onRegister, onSwitchView }) {
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
-    if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      return "Email and password are required.";
+    if (
+      !firstName.trim() ||
+      !lastName.trim() ||
+      !phone.trim() ||
+      !email.trim() ||
+      !password.trim() ||
+      !confirmPassword.trim()
+    ) {
+      return "All fields are required.";
     }
     if (!email.includes("@")) {
       return "Email must contain '@'.";
     }
-    if (password.length < 6) {
-      return "Password must have at least 6 characters.";
+    const phoneDigits = phone.replace(/\D/g, "");
+    if (phoneDigits.length < 10 || !phone.startsWith("+57")) {
+      return "Phone must be a valid Colombian number starting with +57.";
+    }
+    const strong =
+      /[a-z]/.test(password) &&
+      /[A-Z]/.test(password) &&
+      /\d/.test(password) &&
+      /[^A-Za-z0-9]/.test(password) &&
+      password.length >= 8;
+    if (!strong) {
+      return "Password must include upper, lower, number, symbol and 8+ chars.";
     }
     if (password !== confirmPassword) {
       return "Passwords do not match.";
@@ -35,9 +54,16 @@ export function Register({ onRegister, onSwitchView }) {
 
     try {
       setLoading(true);
-      await onRegister({ name: name.trim(), email: email.trim(), password });
-    } catch {
-      setFormError("Registration failed. Please try again.");
+      await onRegister({
+        first_name: firstName,
+        last_name: lastName,
+        phone,
+        email: email.trim(),
+        password,
+      });
+      onSwitchView();
+    } catch (err) {
+      setFormError(err?.message || "Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -52,14 +78,38 @@ export function Register({ onRegister, onSwitchView }) {
         </p>
         <form onSubmit={handleSubmit} className="auth-form">
           <label className="field-label">
-            Name
+            First name
             <input
               type="text"
               className="field-input"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Your name"
-              autoComplete="name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              placeholder="First name"
+              autoComplete="given-name"
+            />
+          </label>
+
+          <label className="field-label">
+            Last name
+            <input
+              type="text"
+              className="field-input"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              placeholder="Last name"
+              autoComplete="family-name"
+            />
+          </label>
+
+          <label className="field-label">
+            Phone
+            <input
+              type="tel"
+              className="field-input"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="+57..."
+              autoComplete="tel"
             />
           </label>
 

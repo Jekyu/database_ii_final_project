@@ -5,4 +5,10 @@ import { USE_MOCKS } from "./config";
 import * as realApi from "./apiService";
 import * as mockApi from "./mockService";
 
-export const api = USE_MOCKS ? mockApi : realApi;
+const baseApi = USE_MOCKS ? mockApi : realApi;
+
+// Always use the real backend for authentication; keep other endpoints
+// configurable while they are still mocked.
+export const api = { ...baseApi, login: realApi.login, register: realApi.register };
+
+export { setAuthToken } from "./apiService";
